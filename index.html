@@ -1,0 +1,175 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- IE fix compitability -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title id='title'>HTML Page setup Tutorial</title>
+
+        <!-- ** CSS ** -->
+        <!-- base library -->
+        <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="./css/custom.css" />
+        <!-- overrides to base library -->
+
+        <!-- ** Javascript ** -->
+        <!-- base library -->
+        <script type="text/javascript" src="./extjs/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="./extjs/ext-all-debug.js"></script>
+
+        <!-- page specific -->
+
+        <script type="text/javascript">
+        Ext.BLANK_IMAGE_URL = './extjs/resources/images/default/s.gif';
+
+        Ext.onReady(function(){
+            //show tooltips
+            Ext.QuickTips.init();
+
+            // sample static data for the store
+            var myData = [
+                ['3m Co',                               71.72, 0.02,  0.03,  '9/1 12:00am'],
+                ['Alcoa Inc',                           29.01, 0.42,  1.47,  '9/1 12:00am'],
+                ['Altria Group Inc',                    83.81, 0.28,  0.34,  '9/1 12:00am'],
+                ['American Express Company',            52.55, 0.01,  0.02,  '9/1 12:00am'],
+                ['American International Group, Inc.',  64.13, 0.31,  0.49,  '9/1 12:00am']
+            ];
+
+
+            // create the data store
+            var store = new Ext.data.ArrayStore({
+               fields: [
+                  {name: 'company'},
+                  {name: 'price',      type: 'float'},
+                  {name: 'change',     type: 'float'},
+                  {name: 'pctChange',  type: 'float'},
+                  {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia'}
+               ]
+            });
+            console.log(store);
+
+            // manually load local data
+            store.loadData(myData);
+
+
+            // create the Grid
+            var grid = new Ext.grid.GridPanel({
+                store: store,
+                columns: [
+                    {
+                        id       :'company',
+                        header   : 'Company',
+                        width    : 160,
+                        sortable : true,
+                        dataIndex: 'company'
+                    },
+                    {
+                        header   : 'Price',
+                        width    : 75,
+                        sortable : true,
+                        //renderer : 'usMoney',
+                        dataIndex: 'price'
+                    },
+                    {
+                        header   : 'Change',
+                        width    : 75,
+                        sortable : true,
+                        //renderer : change,
+                        dataIndex: 'change'
+                    },
+                    {
+                        header   : '% Change',
+                        width    : 75,
+                        sortable : true,
+                        //renderer : pctChange,
+                        dataIndex: 'pctChange'
+                    },
+                    {
+                        header   : 'Дата',
+                        width    : 85,
+                        sortable : true,
+                        renderer : Ext.util.Format.dateRenderer('d.m.Y'),
+                        dataIndex: 'lastChange'
+                    },
+                    {
+                        xtype: 'actioncolumn',
+                        width: 80,
+
+
+                        items: [{
+                            icon   : './img/print.png',  // Use a URL in the icon config
+                            tooltip: 'Печать',
+                            iconCls: 'my-icon',
+                            handler : function() {
+                                window.open (
+                                  'about:blank',
+                                  '_blank' // <- This is what makes it open in a new window.
+                                );
+                            }
+                        },
+                        {
+                            icon   : './img/docs.png',  // Use a URL in the icon config
+                            tooltip: 'Список документов',
+                            iconCls: 'my-icon',
+                            handler : function() {
+                                window.open (
+                                  'about:blank',
+                                  '_blank' // <- This is what makes it open in a new window.
+                                );
+                            }
+                        },
+                        {
+                            icon   : './img/close.png',  // Use a URL in the icon config
+                            tooltip: 'Удалить',
+                            iconCls: 'my-icon',
+                            handler : function() {
+                                window.open (
+                                  'about:blank',
+                                  '_blank' // <- This is what makes it open in a new window.
+                                );
+                            }
+                        }]
+                    },
+                ],
+                stripeRows: true,
+                autoExpandColumn: 'company',
+                height: 350,
+                width: 600,
+                cls: 'my-panel',
+                title: 'История займов по заемщику'
+                //renderTo: Ext.getBody()
+                // config options for stateful behavior
+                //stateful: true,
+                //stateId: 'grid'
+            });
+
+
+
+
+
+
+
+
+
+
+            //do a Viewport
+            new Ext.Viewport({
+                layout: {
+                    type: 'vbox',
+                    align: 'center',
+                    pack: 'center'
+                },
+                items:[grid]
+            });
+
+
+
+            //
+		    // grid.render(document.body);
+
+        }); //end onReady
+        </script>
+
+    </head>
+    <body>
+    </body>
+</html>

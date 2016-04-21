@@ -1,0 +1,12 @@
+.my-panel .x-panel-header {
+    background: #cecece !important;
+    /*height: 50px;*/
+}
+/*.my-panel .x-panel-header span {
+    display:inline-block;
+    vertical-align: middle;
+}*/
+.my-icon {
+    margin-right: 4px;
+    margin-left: 4px;
+}
