@@ -1,9 +1,12 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <!-- IE fix compitability -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title id='title'>HTML Page setup Tutorial</title>
+        <title id='title'>SMYT-test of knowledge</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
 
         <!-- ** CSS ** -->
         <!-- base library -->
@@ -27,22 +30,23 @@
 
             // sample static data for the store
             var myData = [
-                ['3m Co',                               71.72, 0.02,  0.03,  '9/1 12:00am'],
-                ['Alcoa Inc',                           29.01, 0.42,  1.47,  '9/1 12:00am'],
-                ['Altria Group Inc',                    83.81, 0.28,  0.34,  '9/1 12:00am'],
-                ['American Express Company',            52.55, 0.01,  0.02,  '9/1 12:00am'],
-                ['American International Group, Inc.',  64.13, 0.31,  0.49,  '9/1 12:00am']
+                ['14-01-2012', 61, 71.72, 0.02,  0.03],
+                ['13-02-2012', 10, 29.01, 0.42,  1.47],
+                ['14-02-2012', 20, 83.81, 0.28,  0.34],
+                ['15-02-2012', 30, 52.55, 0.01,  0.02],
+                ['16-02-2012', 40, 64.13, 0.31,  0.49]
             ];
 
 
             // create the data store
             var store = new Ext.data.ArrayStore({
                fields: [
-                  {name: 'company'},
-                  {name: 'price',      type: 'float'},
-                  {name: 'change',     type: 'float'},
-                  {name: 'pctChange',  type: 'float'},
-                  {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia'}
+                    {name: 'startDate', type: 'date', dateFormat: 'd-m-Y'},
+                    {name: 'loanTime', type: 'int'},
+                    {name: 'price',      type: 'float'},
+                    {name: 'change',     type: 'float'},
+                    {name: 'pctChange',  type: 'float'},
+
                ]
             });
             console.log(store);
@@ -51,16 +55,44 @@
             store.loadData(myData);
 
 
+            /**
+             * Custom function used for column renderer
+             * @param {Object} val
+             */
+            function daysChange(val) {
+                if (val > 0) {
+                    return val + ' ' + declOfNum(val, ['день', 'дня', 'дней']);
+                }
+
+                return val;
+            }
+
+            function declOfNum(number, titles)
+            {
+                cases = [2, 0, 1, 1, 1, 2];
+                return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
+            }
+
+
+
             // create the Grid
             var grid = new Ext.grid.GridPanel({
                 store: store,
                 columns: [
                     {
-                        id       :'company',
-                        header   : 'Company',
-                        width    : 160,
-                        sortable : true,
-                        dataIndex: 'company'
+                        header   : 'Дата',
+                        width    : 85,
+                        //sortable : true,
+                        renderer : Ext.util.Format.dateRenderer('d.m.Y'),
+                        dataIndex: 'startDate'
+                    },
+                    {
+                        //id       :'company',
+                        header   : 'Срок',
+                        width    : 60,
+                        //sortable : true,
+                        renderer : daysChange,
+                        dataIndex: 'loanTime'
                     },
                     {
                         header   : 'Price',
@@ -73,7 +105,7 @@
                         header   : 'Change',
                         width    : 75,
                         sortable : true,
-                        //renderer : change,
+
                         dataIndex: 'change'
                     },
                     {
@@ -84,71 +116,58 @@
                         dataIndex: 'pctChange'
                     },
                     {
-                        header   : 'Дата',
-                        width    : 85,
-                        sortable : true,
-                        renderer : Ext.util.Format.dateRenderer('d.m.Y'),
-                        dataIndex: 'lastChange'
-                    },
-                    {
                         xtype: 'actioncolumn',
                         width: 80,
 
 
                         items: [{
-                            icon   : './img/print.png',  // Use a URL in the icon config
+                            icon   : './img/print.png',
                             tooltip: 'Печать',
                             iconCls: 'my-icon',
                             handler : function() {
                                 window.open (
                                   'about:blank',
-                                  '_blank' // <- This is what makes it open in a new window.
+                                  '_blank'
                                 );
                             }
                         },
                         {
-                            icon   : './img/docs.png',  // Use a URL in the icon config
+                            icon   : './img/docs.png',
                             tooltip: 'Список документов',
                             iconCls: 'my-icon',
                             handler : function() {
                                 window.open (
                                   'about:blank',
-                                  '_blank' // <- This is what makes it open in a new window.
+                                  '_blank'
                                 );
                             }
                         },
                         {
-                            icon   : './img/close.png',  // Use a URL in the icon config
+                            icon   : './img/close.png',
                             tooltip: 'Удалить',
                             iconCls: 'my-icon',
-                            handler : function() {
-                                window.open (
-                                  'about:blank',
-                                  '_blank' // <- This is what makes it open in a new window.
-                                );
+                            handler : function(grid, rowIndex, colIndex) {
+                                Ext.MessageBox.buttonText.yes = "Да";
+                                Ext.MessageBox.buttonText.no = "Нет";
+                                Ext.MessageBox.confirm('Удаление', 'Вы действительно хотите удалить эту запись?', function(btn) {
+                                    if (btn === 'yes') {
+                                        var rec = store.getAt(rowIndex);
+                                        //console.log(rec);
+                                        store.remove(rec);
+                                    }
+                                });
                             }
                         }]
                     },
                 ],
                 stripeRows: true,
-                autoExpandColumn: 'company',
+                //autoExpandColumn: 'company',
                 height: 350,
                 width: 600,
                 cls: 'my-panel',
                 title: 'История займов по заемщику'
                 //renderTo: Ext.getBody()
-                // config options for stateful behavior
-                //stateful: true,
-                //stateId: 'grid'
             });
-
-
-
-
-
-
-
-
 
 
             //do a Viewport
@@ -161,9 +180,6 @@
                 items:[grid]
             });
 
-
-
-            //
 		    // grid.render(document.body);
 
         }); //end onReady

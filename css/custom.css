@@ -1,3 +1,8 @@
+body {
+    background: #C38CC3;
+    background-image: url("../img/overlay.png");
+}
+
 .my-panel .x-panel-header {
     background: #cecece !important;
     /*height: 50px;*/
