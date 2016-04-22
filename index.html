@@ -30,11 +30,11 @@
 
             // sample static data for the store
             var myData = [
-                ['14-01-2012', 61, 71.72, 0.02,  0.03],
-                ['13-02-2012', 10, 29.01, 0.42,  1.47],
-                ['14-02-2012', 20, 83.81, 0.28,  0.34],
-                ['15-02-2012', 30, 52.55, 0.01,  0.02],
-                ['16-02-2012', 40, 64.13, 0.31,  0.49]
+                ['14-01-2012', 61, '13-04-2012', 90000.00, 7,  108000.00, 'погашен'],
+                ['13-02-2012', 10, '18-04-2012', 70000.00, 10,  84000.00, 'выдан'],
+                ['14-02-2012', 20, '14-04-2012', 91000.01, 7.1,  109000.1, 'погашен'],
+                ['15-02-2012', 30, '15-04-2012', 92000.02, 7.01,  109000.02, 'погашен'],
+                ['16-02-2012', 40, '16-04-2012', 93000.03, 7.02,  109000.03, 'погашен']
             ];
 
 
@@ -43,13 +43,15 @@
                fields: [
                     {name: 'startDate', type: 'date', dateFormat: 'd-m-Y'},
                     {name: 'loanTime', type: 'int'},
-                    {name: 'price',      type: 'float'},
-                    {name: 'change',     type: 'float'},
-                    {name: 'pctChange',  type: 'float'},
+                    {name: 'endDate', type: 'date', dateFormat: 'd-m-Y'},
+                    {name: 'loanBody',      type: 'number'},
+                    {name: 'pct',     type: 'float'},
+                    {name: 'totalPctSum',  type: 'number'},
+                    {name: 'status'},
 
                ]
             });
-            console.log(store);
+            //console.log(store);
 
             // manually load local data
             store.loadData(myData);
@@ -63,7 +65,6 @@
                 if (val > 0) {
                     return val + ' ' + declOfNum(val, ['день', 'дня', 'дней']);
                 }
-
                 return val;
             }
 
@@ -73,11 +74,35 @@
                 return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
             }
 
+            /**
+             * Custom function used for column renderer
+             * @param {Object} val
+             */
+            function thoursandSeparator(val) {
+                //check if contains decimal
+                if (val > Math.floor(val)) {
+                    return numberWithSpaces(val);
+                }
+
+                return numberWithSpaces(val) + '.00';
+            }
+
+            function numberWithSpaces(x) {
+                var parts = x.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                return parts.join(".");
+            }
 
 
             // create the Grid
             var grid = new Ext.grid.GridPanel({
                 store: store,
+                stripeRows: true,
+                autoExpandColumn: 'loanStatus',
+                height: 350,
+                width: 700,
+                cls: 'my-panel',
+                title: 'История займов по заемщику',
                 columns: [
                     {
                         header   : 'Дата',
@@ -87,33 +112,46 @@
                         dataIndex: 'startDate'
                     },
                     {
-                        //id       :'company',
                         header   : 'Срок',
-                        width    : 60,
-                        //sortable : true,
+                        width    : 80,
+                        sortable : true,
                         renderer : daysChange,
                         dataIndex: 'loanTime'
                     },
                     {
-                        header   : 'Price',
-                        width    : 75,
+                        header   : 'Дата пог.',
+                        width    : 85,
                         sortable : true,
-                        //renderer : 'usMoney',
-                        dataIndex: 'price'
+                        renderer : Ext.util.Format.dateRenderer('d.m.Y'),
+                        dataIndex: 'endDate'
                     },
                     {
-                        header   : 'Change',
+                        header   : 'Тело займа',
+                        width    : 85,
+                        sortable : true,
+                        renderer : thoursandSeparator,
+                        dataIndex: 'loanBody'
+                    },
+                    {
+                        header   : '%',
+                        width    : 40,
+                        sortable : true,
+                        dataIndex: 'pct'
+                    },
+                    {
+                        header   : 'Сумма + %',
+                        width    : 85,
+                        sortable : true,
+                        renderer : thoursandSeparator,
+                        dataIndex: 'totalPctSum'
+                    },
+                    {
+                        id       :'loanStatus',
+                        header   : 'Статус',
                         width    : 75,
                         sortable : true,
 
-                        dataIndex: 'change'
-                    },
-                    {
-                        header   : '% Change',
-                        width    : 75,
-                        sortable : true,
-                        //renderer : pctChange,
-                        dataIndex: 'pctChange'
+                        dataIndex: 'status'
                     },
                     {
                         xtype: 'actioncolumn',
@@ -121,7 +159,7 @@
 
 
                         items: [{
-                            icon   : './img/print.png',
+                            icon   : './img/icons/print.png',
                             tooltip: 'Печать',
                             iconCls: 'my-icon',
                             handler : function() {
@@ -132,18 +170,26 @@
                             }
                         },
                         {
-                            icon   : './img/docs.png',
+
+                            icon   : './img/icons/docs.png',
                             tooltip: 'Список документов',
-                            iconCls: 'my-icon',
+                            //iconCls: 'my-icon',
                             handler : function() {
                                 window.open (
                                   'about:blank',
                                   '_blank'
-                                );
+                                )
+                            },
+                            getClass: function(v, meta, rec) {
+
+                                if (rec.get('status') != 'выдан') {
+                                    return 'my-icon x-hide-display';
+                                }
+                                return 'my-icon';
                             }
                         },
                         {
-                            icon   : './img/close.png',
+                            icon   : './img//icons/close.png',
                             tooltip: 'Удалить',
                             iconCls: 'my-icon',
                             handler : function(grid, rowIndex, colIndex) {
@@ -160,12 +206,39 @@
                         }]
                     },
                 ],
-                stripeRows: true,
-                //autoExpandColumn: 'company',
-                height: 350,
-                width: 600,
-                cls: 'my-panel',
-                title: 'История займов по заемщику'
+                tbar: {
+                    height       : 50,
+                    layout       : 'hbox',
+                    cls: 'my-tbar',
+                    layoutConfig : {
+                        align : 'middle'
+                    },
+                    defaults : {
+                        //flex : 1
+                        cls: 'x-toolbar-standardbutton'
+                    },
+                    items: [
+                        {xtype: 'tbspacer', width: 10}, // add a 10px space
+                        {
+                            text: 'Выдать займ',
+                            icon: './img/icons/money.png',
+                            height: 30,
+                            style: { 'padding-left': '5px' },
+                        },
+                        {xtype: 'tbspacer', width: 10}, // add a 10px space
+                        {
+                            text: 'Просмотр займа',
+                            icon: './img/icons/eye.png',
+                            height: 30
+                        },
+                        {xtype: 'tbspacer', width: 10}, // add a 10px space
+                        {
+                            text: 'Информация',
+                            icon: './img/icons/info.png',
+                            height: 30
+                        }
+                    ]
+                }
                 //renderTo: Ext.getBody()
             });
 
