@@ -47,6 +47,22 @@
 .x-toolbar .x-toolbar-standardbutton.x-btn-pressed .x-btn-bc { background-position: 0 -21px; }
 
 
+/* override grid header */
+.x-grid3-header {
+    background-color: #dadada;
+    background-image: none;
+
+}
+td.x-grid3-hd-over {
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+td.x-grid3-hd-over .x-grid3-hd-inner {
+    background-color: #999999;
+    background-image: none;
+}
+
+
 /** MY STYLES **/
 
 body {
@@ -64,6 +80,11 @@ body {
     line-height: 2rem;
     margin-left: 1.5rem;
 }
+
+.my-panel .x-grid3-row-selected {
+    background-color: #FFCACC !important;
+}
+
 /* tbar */
 .my-tbar {
     background: #99FFFF !important;

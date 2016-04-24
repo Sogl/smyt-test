@@ -12,3 +12,5 @@ Forum thread with download link: https://www.sencha.com/forum/showthread.php?260
 3. `git submodule update --init`
 4. `cd extjs && git checkout tags/3.4.1.1`
 5. Open `index.html`
+
+For sending AJAX requests you need to run example on HTTP server (Apache, ngnix). Rename `foo1.php` to `foo.php` for success reply.
