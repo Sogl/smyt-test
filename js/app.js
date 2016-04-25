@@ -349,78 +349,48 @@ Ext.onReady(function(){
     /* LAST PANEL */
 
 
-    // Ext.define('TestStore', {
-    //     extend: 'Ext.data.ArrayStore',
-    //     storeId: 'TestStore',
-    //     autoLoad: false,
-    //     // reader: new Ext.data.ArrayReader(
-    //     //     {
-    //     //        idIndex: 0  // id for each record will be the first element
-    //     //     },
-    //     //     rt // recordType
-    //     // ),
-    //     constructor: function(){
-    //         //this.callParent(arguments);
-    //         this.superclass.constructor.apply(this, arguments);
-    //         //this.model.prototype.idProperty = 'id';
-    //         //
-    //         this.loadData(new Date(), 111, 32.3);
-    //     },
-    //     fields: [
-    //         { name: 'date', type: 'date' },
-    //         { name: 'number', type: 'number' },
-    //         { name: 'percent', type: 'float' }
-    //     ]
-    // });
+    var rt = Ext.data.Record.create([
+        {name: 'date'},
+        {name: 'number'},
+        {name: 'percent'}
+    ]);
 
-
-    var My = Ext.extend('Ext.data.ArrayStore', {
+    Ext.define('TestStore', {
+        extend: 'Ext.data.Store',
+        reader: new Ext.data.ArrayReader(
+            {
+                idIndex: 0  // id for each record will be the first element
+            },
+            rt // recordType
+        ),
+        storeId: 'TestStore',
+        generateData: function() {
+            var me = this,
+                data = [];
+            // generate 10 records
+            for( var i=0;i<10;i++) {
+                data.push([
+                    me.randomDate(new Date(2015, 0, 1), new Date()),
+                    Math.floor( Math.random() * 1000 ),
+                    ( ( Math.random() * 1000 ) / 3.2 ).toFixed( 1 )
+                ]);
+            }
+            console.log(data);
+            return data;
+        },
+        randomDate: function(start, end) {
+            return new Date(
+                start.getTime() + Math.random() * (end.getTime() - start.getTime())
+            );
+        },
         constructor: function() {
-            this.superclass.constructor.apply(this, arguments);
-            console.log('test');
+            //console.log('constructor!');
+            var me = this;
+            TestStore.superclass.constructor.apply(me, arguments);
+            me.loadData(me.generateData(), true);
+            //me.add(me.generateData());
         }
     });
-
-    console.log(My);
-
-    // Ext.define('TestStore', {
-    //     extend: 'Ext.data.Store',
-    //     //model: 'TestModel',
-    //     fields: [
-    //         {name: 'date'},
-    //         {name: 'number'},
-    //         {name: 'percent'}
-    //     ],
-    //     storeId: 'TestStore',
-    //     generateData: function() {
-    //         var me = this,
-    //             data = [];
-    //         // generate 10 records
-    //         for( var i=0;i<10;i++) {
-    //             data.push([
-    //                 me.randomDate(new Date(2012, 0, 1), new Date()),
-    //                 Math.floor( Math.random() * 1000 ),
-    //                 ( ( Math.random() * 1000 ) / 3.2 ).toFixed( 1 )
-    //             ]);
-    //         }
-    //         console.log(data);
-    //         return data;
-    //     },
-    //     randomDate: function(start, end) {
-    //         return new Date(
-    //             start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    //         );
-    //     },
-    //     constructor: function() {
-    //         console.log('constructor!');
-    //         var me = this;
-    //         //me.callParent(arguments);
-    //         //me.add(me.generateData())
-    //         me.superclass.constructor.apply(me, arguments);
-    //         me.loadData(me.generateData(), true);
-    //         //me.add(me.generateData());
-    //     }
-    // });
 
 
 
@@ -444,11 +414,11 @@ Ext.onReady(function(){
 
 
 
-    //var store2 = new TestStore();
-    //console.log(store2);
+    var store2 = new TestStore();
+    console.log(store2);
 
     var gridNew = new Ext.grid.GridPanel({
-        //store: store2,
+        store: store2,
         enableHdMenu: false,
         height: 200,
         width: 300,
@@ -479,7 +449,7 @@ Ext.onReady(function(){
         bodyBorder: false,
         border: false,
         layout: 'fit',
-        //items: [gridNew]
+        items: [gridNew]
     });
 
 
