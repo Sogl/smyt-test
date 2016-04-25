@@ -349,6 +349,39 @@ Ext.onReady(function(){
     /* LAST PANEL */
 
 
+    // Ext.define('TestStore', {
+    //     extend: 'Ext.data.ArrayStore',
+    //     storeId: 'TestStore',
+    //     autoLoad: false,
+    //     // reader: new Ext.data.ArrayReader(
+    //     //     {
+    //     //        idIndex: 0  // id for each record will be the first element
+    //     //     },
+    //     //     rt // recordType
+    //     // ),
+    //     constructor: function(){
+    //         //this.callParent(arguments);
+    //         this.superclass.constructor.apply(this, arguments);
+    //         //this.model.prototype.idProperty = 'id';
+    //         //
+    //         this.loadData(new Date(), 111, 32.3);
+    //     },
+    //     fields: [
+    //         { name: 'date', type: 'date' },
+    //         { name: 'number', type: 'number' },
+    //         { name: 'percent', type: 'float' }
+    //     ]
+    // });
+
+
+    var My = Ext.extend('Ext.data.ArrayStore', {
+        constructor: function() {
+            this.superclass.constructor.apply(this, arguments);
+            console.log('test');
+        }
+    });
+
+    console.log(My);
 
     // Ext.define('TestStore', {
     //     extend: 'Ext.data.Store',
@@ -362,16 +395,15 @@ Ext.onReady(function(){
     //     generateData: function() {
     //         var me = this,
     //             data = [];
-    //         // generate 50 records
+    //         // generate 10 records
     //         for( var i=0;i<10;i++) {
-    //             data.push({
-    //                 date: me.randomDate(new Date(2012, 0, 1), new Date()),
-    //                 number: Math.floor( Math.random() * 1000 ),
-    //                 percent: ( ( Math.random() * 1000 ) / 3.2 ).toFixed( 1 ),
-    //             });
+    //             data.push([
+    //                 me.randomDate(new Date(2012, 0, 1), new Date()),
+    //                 Math.floor( Math.random() * 1000 ),
+    //                 ( ( Math.random() * 1000 ) / 3.2 ).toFixed( 1 )
+    //             ]);
     //         }
     //         console.log(data);
-    //         console.log(typeof data);
     //         return data;
     //     },
     //     randomDate: function(start, end) {
@@ -384,36 +416,31 @@ Ext.onReady(function(){
     //         var me = this;
     //         //me.callParent(arguments);
     //         //me.add(me.generateData())
-    //         console.log(me);
-    //
     //         me.superclass.constructor.apply(me, arguments);
-    //         //me.loadData(me.generateData(), true);
-    //         me.add(me.generateData());
+    //         me.loadData(me.generateData(), true);
+    //         //me.add(me.generateData());
     //     }
     // });
 
 
 
-    var myData2 = [
-        ['14-01-2012', 61, 7.01],
-        ['14-01-2013', 62, 7.02],
-        ['14-01-2014', 63, 7.03],
-        ['14-01-2015', 64, 7.04],
-    ];
-
-
-    // create the data store
-    var store2 = new Ext.data.ArrayStore({
-       fields: [
-            {name: 'date',type: 'date', dateFormat: 'd-m-Y'},
-            {name: 'number'},
-            {name: 'percent'},
-       ]
-    });
-    //console.log(store);
-
-    // manually load local data
-    store2.loadData(myData2);
+    // var myData2 = [
+    //     ['14-01-2012', 61, 7.01],
+    //     ['14-01-2013', 62, 7.02],
+    //     ['14-01-2014', 63, 7.03],
+    //     ['14-01-2015', 64, 7.04],
+    // ];
+    // // create the data store
+    // var store2 = new Ext.data.ArrayStore({
+    //     //autoLoad: true,
+    //     fields: [
+    //         {name: 'date',type: 'date', dateFormat: 'd-m-Y'},
+    //         {name: 'number'},
+    //         {name: 'percent'},
+    //     ]
+    // });
+    // // manually load local data
+    // store2.loadData(myData2);
 
 
 
@@ -421,23 +448,23 @@ Ext.onReady(function(){
     //console.log(store2);
 
     var gridNew = new Ext.grid.GridPanel({
-        store: store2,
+        //store: store2,
         enableHdMenu: false,
         height: 200,
         width: 300,
         columns: [
         {
-            header: 'Date',
+            header: 'Дата',
             dataIndex: 'date',
             renderer : Ext.util.Format.dateRenderer('d.m.Y'),
             //dateFormat: 'd.m.Y'
         },
         {
-            header: 'Number',
+            header: 'Номер',
             dataIndex: 'number'
         },
         {
-            header: 'Percent',
+            header: 'Процент',
             dataIndex: 'percent'
         }
     ]
@@ -452,7 +479,7 @@ Ext.onReady(function(){
         bodyBorder: false,
         border: false,
         layout: 'fit',
-        items: [gridNew]
+        //items: [gridNew]
     });
 
 
