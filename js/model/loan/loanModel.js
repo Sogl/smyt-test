@@ -72,9 +72,9 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
                             icon   : './img/icons/docs.png',
                             tooltip: 'Список документов',
                             iconCls: 'my-icon x-hide-display',
-                            handler : function() {
-                                win2.show();
-                            }
+                            // handler : function() {
+                            //     win2.show();
+                            // }
                         },
                         {
                             icon   : './img/icons/close.png',

@@ -54,30 +54,70 @@ App.view.indexViewport = Ext.extend(Ext.Viewport, {
         this.sendPanelWindow = this.items.itemAt(1);
         this.documentsGridWindow = this.items.itemAt(2);
 
+        //add events
         this.loanGrid.on ({
             scope: this,
             afterrender: function() {
+                //console.log(this);
+
+                //get tbar items
                 var items = this.loanGrid.getTopToolbar().items;
 
+                //foreach
                 items.each(function(item) {
+                    //only buttons
                     if (item.getXType() == 'button') {
 
                         item.on({
                             scope: this,
                             click: function() {
-                                console.log(this);
-
-                                console.log('yep!');
                                 this.sendPanelWindow.show();
                             }
                         });
                     }
 
-                });
+                }, this);
 
+
+                //console.log(this.loanGrid.getSelectionModel());
+
+                selModel = this.loanGrid.getSelectionModel();
+                //console.log(selModel);
+
+                //console.log(this);
+
+                selModel.on({
+                    scope: this,
+                    rowselect: function (grid, rowIndex, keepExisting, record) {
+                        //console.log(rowIndex);
+
+                        // var gridrecord = grid.grid.getSelectionModel().getSelected();
+                        // console.log(gridrecord);
+
+                        //console.log(this);
+                        // console.log(grid.grid.getView());
+                        // console.log(grid.grid.getView().getRow());
+                        //
+                        // var cell = grid.grid.getView().getCell( rowIndex, 7 );
+                        // console.log(cell);
+
+                        //console.log(record);
+                        // console.log(grid.grid);
+                        // console.log(grid.grid.down('x-grid3-row-selected'));
+
+                        //var el = Ext.get('x-grid3-row-selected');
+                        var el = grid.grid.find('x-grid3-row');
+                        console.log(el);
+
+                    }
+                });
 
             }
         });
+    },
+
+    Click: function () {
+        console.log(this);
     }
 
 });
