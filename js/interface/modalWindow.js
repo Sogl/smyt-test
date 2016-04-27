@@ -1,5 +1,4 @@
 //for all modal windows
-
 App.interface.modalWindow = Ext.extend(Ext.Window, {
     modal: true,
     closable: true,
@@ -8,10 +7,6 @@ App.interface.modalWindow = Ext.extend(Ext.Window, {
     border: false,
     layout: 'fit',
     initComponent:function() {
-
-        // apply config
-        //Ext.apply(this, Ext.apply(this.initialConfig, config));
-
         // call parent
         App.interface.modalWindow.superclass.initComponent.apply(this, arguments);
     }
@@ -19,4 +14,4 @@ App.interface.modalWindow = Ext.extend(Ext.Window, {
 });
 
 // register xtype
-Ext.reg('modalwindow', App.interface.modalWindow);
+Ext.reg('modalWindow', App.interface.modalWindow);

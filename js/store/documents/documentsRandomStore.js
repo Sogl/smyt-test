@@ -1,18 +1,22 @@
-App.store.randomDataStore = Ext.extend(Ext.data.Store, {
+App.store.documentsRandomStore = Ext.extend(Ext.data.Store, {
     reader: new Ext.data.ArrayReader(
         {
             idIndex: 0  // id for each record will be the first element
         },
-        rt // recordType
+        //rt // recordType
+        Ext.data.Record.create([
+            {name: 'date'},
+            {name: 'number'},
+            {name: 'percent'}
+        ])
     ),
-    storeId: 'TestStore',
+    storeId: 'documentsRandomStore',
     generateData: function(count) {
-        var me = this,
-            data = [];
+        var data = [];
         // generate records
-        for( var i=0;i<count;i++) {
+        for(var i=0; i<count; i++) {
             data.push([
-                me.randomDate(new Date(2016, 0, 1), new Date()),
+                this.randomDate(new Date(2016, 0, 1), new Date()),
                 'Документ ' + Math.floor( Math.random() * 100 ),
                 ( ( Math.random() * 1000 ) / 3.2 ).toFixed( 1 )
             ]);
@@ -26,10 +30,7 @@ App.store.randomDataStore = Ext.extend(Ext.data.Store, {
         );
     },
     constructor: function(count) {
-        //console.log('constructor!');
-        var me = this;
-        TestStore.superclass.constructor.apply(me, arguments);
-        me.loadData(me.generateData(count), true);
-        //me.add(me.generateData());
+        App.store.documentsRandomStore.superclass.constructor.apply(this, arguments);
+        this.loadData(this.generateData(count));
     }
 });

@@ -1,9 +1,5 @@
-// user
-Ext.ns('App', 'App.user');
-
-App.user.loanGrid = Ext.extend(Ext.grid.GridPanel, {
-    store: App.store.loanStore,
-    colModel: new App.model.loanModel({}),
+//custom loan grid
+App.view.loanGrid = Ext.extend(Ext.grid.GridPanel, {
     stripeRows: true,
     cls: 'my-panel',
     columnLines: true,
@@ -15,12 +11,12 @@ App.user.loanGrid = Ext.extend(Ext.grid.GridPanel, {
     },
     initComponent : function() {
 
-        // build toolbars and buttons.
+        //build toolbars/buttons and selection model
         this.tbar = this.buildTopToolbar();
         this.sm = this.buildSelectionModel();
 
-        // super
-        App.user.loanGrid.superclass.initComponent.call(this);
+        //super
+        App.view.loanGrid.superclass.initComponent.call(this);
     },
 
     /**
@@ -45,28 +41,27 @@ App.user.loanGrid = Ext.extend(Ext.grid.GridPanel, {
                     icon: './img/icons/money.png',
                     height: 30,
                     style: { 'padding-left': '5px' },
-                    handler: function() {
-                        win.show();
-                        //App.user.Window.show();
-                    }
+                    // handler: function() {
+                    //     win.show();
+                    // }
                 },
                 {xtype: 'tbspacer', width: 10}, // add a 10px space
                 {
                     text: 'Просмотр займа',
                     icon: './img/icons/eye.png',
                     height: 30,
-                    handler: function() {
-                        win.show();
-                    }
+                    // handler: function() {
+                    //     win.show();
+                    // }
                 },
                 {xtype: 'tbspacer', width: 10}, // add a 10px space
                 {
                     text: 'Информация',
                     icon: './img/icons/info.png',
                     height: 30,
-                    handler: function() {
-                        win.show();
-                    }
+                    // handler: function() {
+                    //     win.show();
+                    // }
                 }
             ]
         });
@@ -120,4 +115,4 @@ App.user.loanGrid = Ext.extend(Ext.grid.GridPanel, {
 });
 
 // register xtype
-Ext.reg('loanGrid', App.user.loanGrid);
+Ext.reg('loanGrid', App.view.loanGrid);

@@ -4,9 +4,13 @@ Ext.BLANK_IMAGE_URL = './extjs/resources/images/default/s.gif';
 
 //*** Application namespaces
 Ext.ns('App');
+//interface modules namespace
 Ext.ns('App', 'App.interface');
+//models/columns namespace
 Ext.ns('App', 'App.model');
+//view namespace
 Ext.ns('App', 'App.view');
+//store/data namespace
 Ext.ns('App', 'App.store');
 
 // sample loan data
@@ -28,35 +32,10 @@ Ext.onReady(function(){
     Ext.MessageBox.buttonText.no = 'Нет';
 
 
-    // create user.loanGrid instance (@see loanGrid.js)
-    var mainLoanGrid = new App.user.loanGrid({
-        height: 350,
-        width: 700,
-        title: 'История займов по заемщику'
-    });
 
-    //load our data
-    mainLoanGrid.getStore().loadData(loanData);
+    //create Viewport... that's all! =)
+    var Vprt = new App.view.indexViewport({});
 
-    var win = new App.interface.modalWindow ({
-        title: 'Список документов'
-    });
-    //console.log(win);
-    //win.show();
-
-    //do a Viewport
-    var Viewport = new Ext.Viewport({
-        layout: {
-            type: 'vbox',
-            align: 'center',
-            pack: 'center'
-        },
-        items:[mainLoanGrid,
-            win]
-        //items:[gridNew, win]
-    });
-
-
-    console.log(this);
+    //console.log(this);
 
 }); //end onReady

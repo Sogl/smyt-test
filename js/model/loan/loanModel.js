@@ -1,8 +1,8 @@
+//custom loan model
 App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
 
     constructor: function() {
         config = {
-
             columns: [
                 {
                     header   : 'Дата',
@@ -94,12 +94,8 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
             ]
         };
 
-        // console.log(config);
-        // console.log(this);
-
         //super
         App.model.loanModel.superclass.constructor.call(this, config);
-
     },
     declOfNum: function(number, titles)
     {
@@ -138,5 +134,3 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
 
 
 });
-
-//return colMod;
