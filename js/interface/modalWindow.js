@@ -6,7 +6,7 @@ App.interface.modalWindow = Ext.extend(Ext.Window, {
     bodyBorder: false,
     border: false,
     layout: 'fit',
-    initComponent:function() {
+    initComponent: function() {
         // call parent
         App.interface.modalWindow.superclass.initComponent.apply(this, arguments);
     }

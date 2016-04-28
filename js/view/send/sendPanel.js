@@ -1,4 +1,4 @@
-App.view.sendPanel = Ext.extend(Ext.form.FormPanel, {
+App.view.send.sendPanel = Ext.extend(Ext.form.FormPanel, {
     region: 'center',
     autoHeight : true,
     bodyStyle:'padding: 10px',
@@ -20,7 +20,7 @@ App.view.sendPanel = Ext.extend(Ext.form.FormPanel, {
         this.buttons = this.buildUI();
 
         //super
-        App.view.sendPanel.superclass.initComponent.call(this);
+        App.view.send.sendPanel.superclass.initComponent.call(this);
     },
    /**
     * buildform
@@ -53,10 +53,6 @@ App.view.sendPanel = Ext.extend(Ext.form.FormPanel, {
             scope: this
         },{
             text: 'Отменить'
-            // handler: function() {
-            //     this.hide();
-            // },
-            // scope: this
         }];
     },
 
@@ -66,6 +62,7 @@ App.view.sendPanel = Ext.extend(Ext.form.FormPanel, {
     onSave: function() {
         if (!this.getForm().isValid()) {
             Ext.Msg.alert('Сохранение', 'Невозможно сохранить. Пожалуйста, заполните все поля формы.');
+
             return;
         }
         //get form values
@@ -78,9 +75,6 @@ App.view.sendPanel = Ext.extend(Ext.form.FormPanel, {
             timeout: 30000,
             url: './server/foo.php',
             success: function(response, request) {
-                console.log(response);
-                console.log(request);
-
                 Ext.Msg.alert('Успех', 'Успешная отправка формы =)');
             },
             failure: function(response, request) {
@@ -93,4 +87,4 @@ App.view.sendPanel = Ext.extend(Ext.form.FormPanel, {
 });
 
 // register xtype
-Ext.reg('sendPanel', App.view.sendPanel);
+Ext.reg('sendPanel', App.view.send.sendPanel);

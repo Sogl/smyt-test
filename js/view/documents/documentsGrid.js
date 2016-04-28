@@ -1,5 +1,5 @@
 //custom documents grid
-App.view.documentsGrid = Ext.extend(Ext.grid.GridPanel, {
+App.view.documents.documentsGrid = Ext.extend(Ext.grid.GridPanel, {
     enableHdMenu: false,
     stripeRows: true,
     viewConfig: {
@@ -10,11 +10,11 @@ App.view.documentsGrid = Ext.extend(Ext.grid.GridPanel, {
      * initComponent
      * @protected
      */
-    initComponent : function() {
+    initComponent: function() {
         //super
-        App.view.documentsGrid.superclass.initComponent.call(this);
+        App.view.documents.documentsGrid.superclass.initComponent.call(this);
     }
 });
 
 // register xtype
-Ext.reg('documentsGrid', App.view.documentsGrid);
+Ext.reg('documentsGrid', App.view.documents.documentsGrid);

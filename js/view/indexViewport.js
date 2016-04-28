@@ -1,6 +1,6 @@
 App.view.indexViewport = Ext.extend(Ext.Viewport, {
 
-    initComponent:function() {
+    initComponent: function() {
         var config = {
             layout: {
                 type: 'vbox',
@@ -9,40 +9,31 @@ App.view.indexViewport = Ext.extend(Ext.Viewport, {
             },
             items: [
                {
-                   xtype: 'loanGrid',
-                   store: new App.store.loanStore({}),
-                   colModel: new App.model.loanModel({}),
-                   height: 350,
-                   width: 700,
-                   title: 'История займов по заемщику',
-                   listeners: {
-                       render: function() {
-                           //load data to store
-                           this.getStore().loadData(loanData);
-                       }
-                   }
-               },
-               {
-                   xtype: 'sendPanelWindow',
-                   // listeners: {
-                   //     afterrender: function() {
-                   //         this.show();
-                   //     }
-                   // }
-               },
-               {
-                   // create view.documentsGrid instance (@see documentsGrid.js)
-                   xtype: 'documentsGridWindow',
-                   // listeners: {
-                   //     afterrender: function() {
-                   //         this.show();
-                   //     }
-                   // }
-               }
+                    //create view.sendPanelWindow instance (@see sendPanelWindow.js)
+                    xtype: 'loanGrid',
+                    store: new App.store.loan.loanStore({}),
+                    colModel: new App.model.loan.loanModel({}),
+                    height: 350,
+                    width: 700,
+                    title: 'История займов по заемщику',
+                    listeners: {
+                        render: function() {
+                            //load data to store
+                            this.getStore().loadData(loanData);
+                        }
+                    }
+                },
+                {
+                    //create view.sendPanelWindow instance (@see sendPanelWindow.js)
+                    xtype: 'sendPanelWindow',
+                },
+                {
+                    //create view.documentsGridWindow instance (@see documentsGridWindow.js)
+                    xtype: 'documentsGridWindow',
+                }
 
             ]
         };
-
 
         // apply config
         Ext.apply(this, Ext.apply(this.initialConfig, config));
@@ -58,7 +49,6 @@ App.view.indexViewport = Ext.extend(Ext.Viewport, {
         this.loanGrid.on ({
             scope: this,
             afterrender: function() {
-                //console.log(this);
 
                 //get tbar items
                 var items = this.loanGrid.getTopToolbar().items;
@@ -78,46 +68,29 @@ App.view.indexViewport = Ext.extend(Ext.Viewport, {
 
                 }, this);
 
-
-                //console.log(this.loanGrid.getSelectionModel());
-
+                //get selection model
                 selModel = this.loanGrid.getSelectionModel();
-                //console.log(selModel);
-
-                //console.log(this);
 
                 selModel.on({
                     scope: this,
                     rowselect: function (grid, rowIndex, keepExisting, record) {
-                        //console.log(rowIndex);
 
-                        // var gridrecord = grid.grid.getSelectionModel().getSelected();
-                        // console.log(gridrecord);
+                        //get second icon in actioncolumn
+                        var icon = grid.grid.getColumnModel().getColumnById('action').items[1];
 
-                        //console.log(this);
-                        // console.log(grid.grid.getView());
-                        // console.log(grid.grid.getView().getRow());
-                        //
-                        // var cell = grid.grid.getView().getCell( rowIndex, 7 );
-                        // console.log(cell);
+                        //save context
+                        var self = this;
 
-                        //console.log(record);
-                        // console.log(grid.grid);
-                        // console.log(grid.grid.down('x-grid3-row-selected'));
-
-                        //var el = Ext.get('x-grid3-row-selected');
-                        var el = grid.grid.find('x-grid3-row');
-                        console.log(el);
-
+                        //add handler by direct set
+                        icon.handler = function(grid, rowIndex, colIndex) {
+                            //open documents window
+                            self.documentsGridWindow.show();
+                        };
                     }
                 });
 
             }
         });
-    },
-
-    Click: function () {
-        console.log(this);
     }
 
 });

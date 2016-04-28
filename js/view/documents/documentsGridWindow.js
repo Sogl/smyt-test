@@ -1,11 +1,11 @@
-App.view.documentsGridWindow = Ext.extend( App.interface.modalWindow, {
+App.view.documents.documentsGridWindow = Ext.extend( App.interface.modalWindow, {
     title: 'Список документов',
-    initComponent:function() {
+    initComponent: function() {
         var config = {
             items: [{
                 xtype: 'documentsGrid',
-                store: new App.store.documentsRandomStore(7),
-                colModel: new App.model.documentsModel({}),
+                store: new App.store.documents.documentsRandomStore(7),
+                colModel: new App.model.documents.documentsModel({}),
                 height: 200,
                 width: 300
             }]
@@ -15,10 +15,10 @@ App.view.documentsGridWindow = Ext.extend( App.interface.modalWindow, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         //super
-        App.view.documentsGridWindow.superclass.initComponent.apply(this, arguments);
+        App.view.documents.documentsGridWindow.superclass.initComponent.apply(this, arguments);
     }
 
 });
 
 // register xtype
-Ext.reg('documentsGridWindow', App.view.documentsGridWindow);
+Ext.reg('documentsGridWindow', App.view.documents.documentsGridWindow);

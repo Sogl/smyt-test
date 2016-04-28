@@ -6,12 +6,19 @@ Ext.BLANK_IMAGE_URL = './extjs/resources/images/default/s.gif';
 Ext.ns('App');
 //interface modules namespace
 Ext.ns('App', 'App.interface');
-//models/columns namespace
+//models/columns namespaces
 Ext.ns('App', 'App.model');
-//view namespace
+Ext.ns('App.model', 'App.model.documents');
+Ext.ns('App.model', 'App.model.loan');
+//view namespaces
 Ext.ns('App', 'App.view');
-//store/data namespace
+Ext.ns('App.view', 'App.view.documents');
+Ext.ns('App.view', 'App.view.loan');
+Ext.ns('App.view', 'App.view.send');
+//store/data namespaces
 Ext.ns('App', 'App.store');
+Ext.ns('App.store', 'App.store.documents');
+Ext.ns('App.store', 'App.store.loan');
 
 // sample loan data
 var loanData = [
@@ -23,19 +30,18 @@ var loanData = [
 ];
 
 
-//!!! application main entry point
+//*** application main entry point
 Ext.onReady(function(){
     //show tooltips
     Ext.QuickTips.init();
+
     //add RU messagebox tanslation
     Ext.MessageBox.buttonText.yes = 'Да';
     Ext.MessageBox.buttonText.no = 'Нет';
 
-
-
     //create Viewport... that's all! =)
     var Vprt = new App.view.indexViewport({});
 
-    //console.log(this);
+    console.log(this);
 
 }); //end onReady

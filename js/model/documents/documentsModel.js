@@ -1,5 +1,5 @@
 //custom documents model
-App.model.documentsModel = Ext.extend(Ext.grid.ColumnModel, {
+App.model.documents.documentsModel = Ext.extend(Ext.grid.ColumnModel, {
 
     constructor: function() {
         config = {
@@ -7,7 +7,7 @@ App.model.documentsModel = Ext.extend(Ext.grid.ColumnModel, {
                 {
                     header: 'Дата',
                     dataIndex: 'date',
-                    renderer : Ext.util.Format.dateRenderer('d.m.Y'),
+                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
                 },
                 {
                     header: 'Номер',
@@ -21,6 +21,6 @@ App.model.documentsModel = Ext.extend(Ext.grid.ColumnModel, {
         };
 
         //super
-        App.model.documentsModel.superclass.constructor.call(this, config);
+        App.model.documents.documentsModel.superclass.constructor.call(this, config);
     }
 });

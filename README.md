@@ -10,7 +10,8 @@ Test of knowledge for SMYT company
 * Source code structure
 * AJAX sending
 * Events using
-* `xtype` using
+* Custom `xtype` using
+* Independent of column moving `actioncolumn` icons changing
 * ...and more =)
 
 ### Installation
@@ -20,7 +21,7 @@ Test of knowledge for SMYT company
 4. `cd extjs && git checkout tags/3.4.1.1`
 5. Open `index.html`
 
-For sending AJAX requests you need to run example on HTTP server (Apache, ngnix). Rename empty file `foo1.php` to `foo.php` for success reply.
+For sending AJAX requests you need to run example on HTTP server (Apache, ngnix).
 
 **ExtJS 3.4.1.1**
 

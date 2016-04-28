@@ -46,7 +46,6 @@
 .x-toolbar .x-toolbar-standardbutton.x-btn-menu-active .x-btn-bc,
 .x-toolbar .x-toolbar-standardbutton.x-btn-pressed .x-btn-bc { background-position: 0 -21px; }
 
-
 /* override grid header */
 .x-grid3-header {
     background-color: #dadada;
@@ -68,7 +67,6 @@ td.x-grid3-hd-over .x-grid3-hd-inner {
 }
 
 /** MY STYLES **/
-
 body {
     background: #C38CC3;
     background-image: url("../img/overlay.png");
@@ -78,7 +76,6 @@ body {
 .my-panel .x-panel-header {
     background: #99CCFF !important;
     color: #000;
-    /*font-size: 13px;*/
     height: 2rem;
 }
 .my-panel .x-panel-header span {
@@ -90,7 +87,6 @@ body {
 .my-tbar {
     background: #99FFFF !important;
 }
-
 .my-icon {
     margin-right: 4px;
     margin-left: 4px;

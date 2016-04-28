@@ -1,18 +1,18 @@
 //custom loan model
-App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
+App.model.loan.loanModel = Ext.extend(Ext.grid.ColumnModel, {
 
     constructor: function() {
         config = {
             columns: [
                 {
-                    header   : 'Дата',
-                    width    : 85,
-                    renderer : Ext.util.Format.dateRenderer('d.m.Y'),
+                    header: 'Дата',
+                    width: 85,
+                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
                     dataIndex: 'startDate'
                 },
                 {
-                    header   : 'Срок',
-                    width    : 80,
+                    header: 'Срок',
+                    width: 80,
                     renderer: {
                         fn: this.daysChange,
                         scope: this
@@ -20,14 +20,14 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
                     dataIndex: 'loanTime'
                 },
                 {
-                    header   : 'Дата пог.',
-                    width    : 85,
-                    renderer : Ext.util.Format.dateRenderer('d.m.Y'),
+                    header: 'Дата пог.',
+                    width: 85,
+                    renderer: Ext.util.Format.dateRenderer('d.m.Y'),
                     dataIndex: 'endDate'
                 },
                 {
-                    header   : 'Тело займа',
-                    width    : 85,
+                    header: 'Тело займа',
+                    width: 85,
                     renderer: {
                         fn: this.thoursandSeparator,
                         scope: this
@@ -35,13 +35,13 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
                     dataIndex: 'loanBody'
                 },
                 {
-                    header   : '%',
-                    width    : 40,
+                    header: '%',
+                    width: 40,
                     dataIndex: 'pct'
                 },
                 {
-                    header   : 'Сумма + %',
-                    width    : 85,
+                    header: 'Сумма + %',
+                    width: 85,
                     renderer: {
                         fn: this.thoursandSeparator,
                         scope: this
@@ -49,19 +49,21 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
                     dataIndex: 'totalPctSum'
                 },
                 {
-                    header   : 'Статус',
-                    width    : 75,
+                    header: 'Статус',
+                    width: 75,
                     dataIndex: 'status'
                 },
                 {
                     xtype: 'actioncolumn',
+                    dataIndex: 'action',
+                    id: 'action',
                     width: 80,
                     items: [
                         {
-                            icon   : './img/icons/print.png',
+                            icon: './img/icons/print.png',
                             tooltip: 'Печать',
                             iconCls: 'my-icon',
-                            handler : function() {
+                            handler: function() {
                                 window.open (
                                   'about:blank',
                                   '_blank'
@@ -69,18 +71,15 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
                             }
                         },
                         {
-                            icon   : './img/icons/docs.png',
+                            icon: './img/icons/docs.png',
                             tooltip: 'Список документов',
                             iconCls: 'my-icon x-hide-display',
-                            // handler : function() {
-                            //     win2.show();
-                            // }
                         },
                         {
-                            icon   : './img/icons/close.png',
+                            icon: './img/icons/close.png',
                             tooltip: 'Удалить',
                             iconCls: 'my-icon x-hide-display',
-                            handler : function(grid, rowIndex, colIndex) {
+                            handler: function(grid, rowIndex, colIndex) {
                                 Ext.MessageBox.confirm('Удаление', 'Вы действительно хотите удалить эту запись?', function(btn) {
                                     if (btn === 'yes') {
                                         var rec = grid.store.getAt(rowIndex);
@@ -95,7 +94,7 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
         };
 
         //super
-        App.model.loanModel.superclass.constructor.call(this, config);
+        App.model.loan.loanModel.superclass.constructor.call(this, config);
     },
     declOfNum: function(number, titles)
     {
@@ -131,6 +130,4 @@ App.model.loanModel = Ext.extend(Ext.grid.ColumnModel, {
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         return parts.join(".");
     }
-
-
 });

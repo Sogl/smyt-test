@@ -1,4 +1,4 @@
-App.store.documentsRandomStore = Ext.extend(Ext.data.Store, {
+App.store.documents.documentsRandomStore = Ext.extend(Ext.data.Store, {
     reader: new Ext.data.ArrayReader(
         {
             idIndex: 0  // id for each record will be the first element
@@ -21,7 +21,6 @@ App.store.documentsRandomStore = Ext.extend(Ext.data.Store, {
                 ( ( Math.random() * 1000 ) / 3.2 ).toFixed( 1 )
             ]);
         }
-        //console.log(data);
         return data;
     },
     randomDate: function(start, end) {
@@ -30,7 +29,7 @@ App.store.documentsRandomStore = Ext.extend(Ext.data.Store, {
         );
     },
     constructor: function(count) {
-        App.store.documentsRandomStore.superclass.constructor.apply(this, arguments);
+        App.store.documents.documentsRandomStore.superclass.constructor.apply(this, arguments);
         this.loadData(this.generateData(count));
     }
 });
