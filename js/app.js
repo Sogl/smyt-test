@@ -41,7 +41,4 @@ Ext.onReady(function(){
 
     //create Viewport... that's all! =)
     var Vprt = new App.view.indexViewport({});
-
-    console.log(this);
-
 }); //end onReady

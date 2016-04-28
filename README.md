@@ -15,10 +15,10 @@ Test of knowledge for SMYT company
 * ...and more =)
 
 ### Installation
-1. `git clone ... && cd smyt-test`
+1. `git clone https://github.com/Sogl/smyt-test && cd smyt-test`
 2. `git submodule foreach git pull`
 3. `git submodule update --init`
-4. `cd extjs && git checkout tags/3.4.1.1`
+4. `cd extjs && git checkout tags/3.4.1.1 && cd ..`
 5. Open `index.html`
 
 For sending AJAX requests you need to run example on HTTP server (Apache, ngnix).
